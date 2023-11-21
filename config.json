@@ -1,0 +1,14 @@
+{
+    "params":
+    {
+        "local_server":"True",
+        "local_uri": "mysql://root:@localhost/coding_things",
+        "prod_uri":"mysql://root:@localhost/coding_things",
+        "fb_url":"https://facebook.com/coding_things",
+        "x_url":"https://x.com/coding_things",
+        "gh_url":"https://github.com/coding_things",
+        "blog_name":"The Coding Things",
+        "tag_line":"A Blog liked by Blog's users."
+
+    }
+}
