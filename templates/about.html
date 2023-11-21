@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block body %}
         <!-- Page Header-->
-        <header class="masthead" style="background-image: url('{{url_for('static', filename='assets/img/about-bg.jpg')}}')">
+        <header class="masthead" style="background-image: url('{{url_for('static', filename='img/about-bg.jpg')}}')">
             <div class="container position-relative px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">
@@ -18,9 +18,7 @@
             <div class="container px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">
-                        <p>It is very important for the customer to pay attention to the adipiscing process. It will often happen that any of us hates pleasures, flight and let them be released to us with hate, do you get what we will accept the most that we lead the whole?</p>
-                        <p>It is very important for the customer to pay attention to the adipiscing process. His present objections to this and that architect's error, to be repelled by a just criticism, are less painful. But never what pleasures in responsibilities pleasure pleasures, less!</p>
-                        <p>It is very important for the customer to pay attention to the adipiscing process. Either they achieve a great thing, they are going to accept something from it. Therefore, it is true that he was born, which I will open the option to be freed from the pleasures of the body, and this should not be times!</p>
+                        <p>{{params['about_text']}}</p>
                     </div>
                 </div>
             </div>
