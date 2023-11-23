@@ -18,7 +18,7 @@
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">
 
-            <!-- Todo:Fetch it using for loop from the database -->
+            <!-- Fetching posts using for loop from the database -->
 
             {% for post in posts %}
             
@@ -47,7 +47,12 @@
 
 
                     <!-- Pager-->
-                    <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="#!">Older Posts →</a></div>
+                    <div class="clearfix">
+                        {% if number!=0 %}
+                        <a class="btn btn-primary float-left" href="/">&larr; Newer Posts</a>
+                        {% endif %}
+                        <a class="btn btn-primary float-right" href="">Older Posts</a>
+                    </div>
                 </div>
             </div>
         </div>
