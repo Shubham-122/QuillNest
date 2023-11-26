@@ -18,10 +18,18 @@
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">
 
+
+                  <h1>Basic Actions</h1>
+                  <button class="btn btn-primary"><a href="/edit/0">Add a New Post</a></button>
+                  <button class="btn btn-primary"><a href="/logout">Logout</a></button>
+                  <hr>
+
+
                     <h1>Upload a File</h1>
-                    <div class="row">
                         We will add file uploader here
-                    </div>
+                        <hr>
+
+
                     <h1>Edit Posts</h1>
                     <table class="table">
                         <thead>
@@ -44,7 +52,7 @@
                             <td>{{post.sno}}</td>
                             <td>{{post.title}}</td>
                             <td>{{post.date}}</td>
-                            <td><button class="btn btn-primary">Edit</button></td>
+                            <td><a href="/edit/{{post.sno}}"><button class="btn btn-primary">Edit</button></a></td>
                             <td><button class="btn btn-primary">Delete</button></td>
                           </tr>
                           {% endfor %}
