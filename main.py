@@ -1,7 +1,10 @@
 from flask import Flask, render_template, request, session, redirect
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+from werkzeug.utils import secure_filename
+import os
 import json
+import math
 
 
 
@@ -12,6 +15,7 @@ with open('config.json', 'r') as c:
 local_server= True
 app = Flask(__name__)
 app.secret_key = 'super-secret-key'
+app.config['UPLOAD_FOLDER'] = params['upload_location']
 
 
 
@@ -75,15 +79,68 @@ def dashboard():
 
 
 
+
+
+
+@app.route("/uploader", methods= ['GET', 'POST'])
+def uploader():
+    if('user' in session and session['user']==params['admin_user']):
+
+        if (request.method == 'POST'):
+            f=request.files['file1']
+            f.save(os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(f.filename)))
+            return "Uploaded Successfully"
+
+
+
+
+
+
+
+
 @app.route("/")
 def home():
-    posts = Posts.query.filter_by().all()[0:params['no_of_posts']]
-    return render_template('index.html', params=params, posts=posts)
+    posts = Posts.query.filter_by().all()
+    last=math.ceil(len(posts)/int(params['no_of_posts']))
+    #[0:params['no_of_posts']]
+
+    # Pagination Logic
+    page = request.args.get('page')
+    if(not str(page).isnumeric()):
+        page = 1
+    page = int(page)
+
+
+    posts= posts[(page-1)*int(params['no_of_posts']):(page-1)*int(params['no_of_posts'])+int(params['no_of_posts'])]
+    # First Page
+    if(page==1):
+        prev="#"
+        next="/?page="+ str(page+1)
+    
+    # Last Page
+    elif(page==last):
+        prev="/?page="+ str(page-1)        
+        next="#"
+
+    # Middle Page
+    else:
+        prev="/?page="+ str(page-1)        
+        next="/?page="+ str(page+1)
+
+ 
+    return render_template('index.html', params=params, posts=posts, prev=prev, next=next)
+
+
+
 
 @app.route("/about")
 def about():
     name = "Shubham Sahai Saxena"
     return render_template('about.html', name= name, params=params)
+
+
+
+
 
 
 
@@ -125,6 +182,31 @@ def edit(sno):
 
 
 
+
+@app.route("/logout")
+def logout():
+    session.pop('user')
+    return redirect('/dashboard')
+
+
+
+
+
+
+
+@app.route("/delete/<string:sno>", methods= ['GET', 'POST'])
+def delete(sno):
+    if('user' in session and session['user']==params['admin_user']):
+        post = Posts.query.filter_by(sno=sno).first()
+        db.session.delete(post)
+        db.session.commit()
+    return redirect('/dashboard')
+
+
+
+
+
+
 @app.route("/contact", methods= ['GET', 'POST'])
 def contact():
     if(request.method=='POST'):
@@ -140,6 +222,13 @@ def contact():
         db.session.commit()
 
     return render_template('contact.html', params=params)
+
+
+
+
+
+
+
 
 @app.route("/post/<string:post_slug>", methods=['GET'])
 def post_route(post_slug):
