@@ -229,6 +229,31 @@ def contact():
 
 
 
+@app.route("/add_post", methods= ['GET', 'POST'])
+def add_post():
+    if(request.method=='POST'):
+        '''Add entry to the database'''
+        
+        name=request.form.get('name')
+        title=request.form.get('title')
+        tag_line=request.form.get('tag_line')
+        slug=request.form.get('slug')
+        content=request.form.get('content')
+        img_file=request.form.get('img_file')
+        
+
+        entry= Posts( name=name, title = title, tag_line = tag_line, slug = slug, content=content, img_file=img_file, date= datetime.now() )
+
+        db.session.add(entry)
+        db.session.commit()
+
+    return render_template('add_post.html', params=params)
+
+
+
+
+
+
 
 @app.route("/post/<string:post_slug>", methods=['GET'])
 def post_route(post_slug):
