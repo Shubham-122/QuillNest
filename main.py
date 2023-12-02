@@ -186,7 +186,7 @@ def edit(sno):
 @app.route("/logout")
 def logout():
     session.pop('user')
-    return redirect('/dashboard')
+    return redirect('/')
 
 
 
